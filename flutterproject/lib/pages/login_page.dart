@@ -1,17 +1,89 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutterproject/components/my_button.dart';
 import 'package:flutterproject/components/my_textfield.dart';
 import 'package:flutterproject/components/square_tile.dart';
 import 'package:flutter/material.dart';
 
-class LoginPage extends StatelessWidget {
-  LoginPage({super.key});
-  
+class LoginPage extends StatefulWidget {
+  const LoginPage({super.key});
+
+  @override
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
   //text editing controllers 
-  final usernameController = TextEditingController();
+  final emailController = TextEditingController();
   final passwordController = TextEditingController();
 
   //sign user in method
-  void signUserIn() {}
+  void signUserIn() async {
+    //show loading circle
+    showDialog(
+      context: context, 
+      builder: (context) {
+        return const Center(
+          child: CircularProgressIndicator(),
+        );
+      }
+    );
+
+    //try sign in
+    try{
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: emailController.text, 
+        password: passwordController.text,
+      );
+      
+      //pop the loading circle
+      Navigator.pop(context);
+
+    } on FirebaseAuthException catch (e) {
+      //pop the loading circle
+      Navigator.pop(context);
+      
+      //wrong email
+      if(e.code == 'invalid-email') {
+        wrongEmailMessage();
+      } 
+
+      //wrong password
+      else if (e.code == 'invalid-credential') {
+        wrongPasswordMessage();
+      }
+    }
+  }
+
+  //wrong email message popup
+  void wrongEmailMessage() {
+    showDialog(
+      context: context,
+      builder: (context) {
+        Future.delayed(const Duration(seconds: 3), () {
+          Navigator.of(context).pop(true);
+        });
+        return const AlertDialog(
+          title: Text('Incorrect Email!'),
+        );
+      },
+    );
+  }
+
+  //wrong password message popup
+  void wrongPasswordMessage() {
+    showDialog(
+      context: context,
+      builder: (context) {
+        Future.delayed(const Duration(seconds: 3), () {
+          Navigator.of(context).pop(true);
+        });
+        return const AlertDialog(
+          title: Text('Incorrect Password!'),
+        );
+      },
+    );
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -43,10 +115,10 @@ class LoginPage extends StatelessWidget {
 
                   const SizedBox(height: 20),
 
-                  //username TextField
+                  //email TextField
                   MyTextField(
-                    controller: usernameController,
-                    hintText: 'username', 
+                    controller: emailController,
+                    hintText: 'email', 
                     obscureText: false,
                   ),
 
@@ -144,7 +216,5 @@ class LoginPage extends StatelessWidget {
       ),
     );
   }
-
-  
 }
 

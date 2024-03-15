@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutterproject/components/my_button.dart';
 import 'package:flutterproject/components/my_textfield.dart';
 import 'package:flutterproject/components/square_tile.dart';
+import 'forgot_password_page.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatefulWidget {
@@ -119,9 +120,21 @@ class _LoginPageState extends State<LoginPage> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        Text(
-                          'Forgot Password',
-                          style: TextStyle(color: Colors.grey[600]),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) {
+                                  return ForgotPasswordPage();
+                                }, 
+                              ),
+                            );
+                          },
+                          child: Text(
+                            'Forgot Password',
+                            style: TextStyle(color: Colors.grey[600]),
+                          ),
                         ),
                       ],
                     ),

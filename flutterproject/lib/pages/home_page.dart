@@ -16,7 +16,9 @@ class HomePage extends StatelessWidget {
   @override
   Widget build (BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.grey[300],
       appBar: AppBar(
+        backgroundColor: Colors.grey[300],
         actions: [
           IconButton(
             onPressed: signUserOut, 
@@ -26,20 +28,21 @@ class HomePage extends StatelessWidget {
       ),
       drawer: Drawer(
         child: Container(
+          color: Colors.grey[400],
           child: ListView(
             children: [
               DrawerHeader(
                 child: Center(
                   child: Text(
                     'L O G O',
-                    style: TextStyle(fontSize: 35),
-                )),
+                    style: TextStyle(fontSize: 35, color: Colors.grey[100]),
+                ))
               ),
               ListTile(
-                leading: Icon(Icons.account_circle),
+                leading: Icon(Icons.account_circle, color: Colors.grey[100]),
                 title: Text(
                   'Page 1',
-                  style: TextStyle(fontSize: 20),
+                  style: TextStyle(fontSize: 20, color: Colors.grey[100]),
                 ),
                 onTap: () {
                   Navigator.of(context).push(
@@ -47,10 +50,10 @@ class HomePage extends StatelessWidget {
                 },
               ),
               ListTile(
-                leading: Icon(Icons.account_circle),
+                leading: Icon(Icons.account_circle, color: Colors.grey[100]),
                 title: Text(
                   'Page 2',
-                  style: TextStyle(fontSize: 20),
+                  style: TextStyle(fontSize: 20, color: Colors.grey[100]),
                 ),
                 onTap: () {
                   Navigator.of(context).push(
